@@ -3,6 +3,7 @@ package knowbloom.backend.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Entity
 @Setter
 @Getter
+@ToString
 @Inheritance(strategy = InheritanceType.JOINED) // Creează tabele separate pentru subclase
 @Table(name="users")
 public class UserModel {
@@ -46,7 +48,6 @@ public class UserModel {
         this.notifications.add(model);
         model.setUser(this);
     }
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

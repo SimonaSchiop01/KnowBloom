@@ -3,13 +3,15 @@ package knowbloom.backend.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
 @Setter
+@Getter
+@ToString
 @Table(name="members")
 public class MemberModel extends UserModel{
     @OneToMany(
