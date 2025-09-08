@@ -5,6 +5,7 @@ import knowbloom.backend.enums.ReactType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -27,4 +28,10 @@ public class ReplyReactModel {
 
     @Enumerated(EnumType.STRING)
     private ReactType react;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }

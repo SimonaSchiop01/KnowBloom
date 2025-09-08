@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -24,9 +25,12 @@ public class ReplyModel {
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="comment_id", nullable=false)
-    private CommentModel comment;
+    @JoinColumn(name="review_id", nullable=false)
+    private ReviewModel review;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable=false)
+    private UserModel user;
     @OneToMany(
         mappedBy = "reply",
         cascade = CascadeType.ALL,
@@ -38,4 +42,10 @@ public class ReplyModel {
         this.reacts.add(model);
         model.setReply(this);
     }
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }

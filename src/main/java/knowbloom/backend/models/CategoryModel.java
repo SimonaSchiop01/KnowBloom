@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 // foloseste @Getter, @Setter in loc de a face getters si setters de asemenea, poti sa folosesti si
@@ -35,5 +36,11 @@ public class CategoryModel {
         this.subjects.add(model);
         model.setCategory(this);
     }
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 
 }

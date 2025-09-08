@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
 @Getter
 @Setter
 @Table(name="comments")
-public class CommentModel {
+public class ReviewModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -25,7 +26,7 @@ public class CommentModel {
     private Integer rating;
 
     @OneToMany(
-        mappedBy = "comment",
+        mappedBy = "review",
         cascade = CascadeType.ALL,
         orphanRemoval = true,
         fetch = FetchType.LAZY
@@ -34,7 +35,7 @@ public class CommentModel {
 
     public void addReply(ReplyModel model) {
         this.replies.add(model);
-        model.setComment(this);
+        model.setReview(this);
     }
 
     @OneToMany(
@@ -42,10 +43,20 @@ public class CommentModel {
         cascade = CascadeType.ALL,
         orphanRemoval = true
     )
-    private List<CommentReactModel> reacts = new ArrayList<>();
+    private List<ReviewReactModel> reacts = new ArrayList<>();
 
-    public void addReact(CommentReactModel model) {
+    public void addReact(ReviewReactModel model) {
         this.reacts.add(model);
         model.setComment(this);
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="member_id", nullable=false)
+    private MemberModel member;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }

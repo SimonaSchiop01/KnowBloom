@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +22,12 @@ public class TeacherModel extends UserModel{
         orphanRemoval = true,
         fetch = FetchType.LAZY
     )
-    private Set<TeacherRateModel> rates = new HashSet<>();
+    private Set<LessonModel> lessons = new HashSet<>();
+
+    public void addLesson(LessonModel model){
+        this.lessons.add(model);
+        model.setTeacher(this);
+    }
 
     @OneToMany(
         mappedBy = "teacher",
@@ -28,15 +35,11 @@ public class TeacherModel extends UserModel{
         orphanRemoval = true,
         fetch = FetchType.LAZY
     )
-    private Set<LessonModel> lessons = new HashSet<>();
+    private Set<ListingModel> listings = new HashSet<>();
 
-    public void addRate(TeacherRateModel model){
-        this.rates.add(model);
-        model.setTeacher(this);
-    }
+    @Column(unique = true, nullable = false)
+    private String bio;
 
-    public void addLesson(LessonModel model){
-        this.lessons.add(model);
-        model.setTeacher(this);
-    }
+    @Column(unique = true, nullable = false)
+    private String cv;
 }

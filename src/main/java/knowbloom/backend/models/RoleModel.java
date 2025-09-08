@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -23,8 +24,13 @@ public class RoleModel {
     @Column(nullable = false, unique = true)
     private Role name;
 
-    // de facut relatie de many to many cu users, de pus de asemenea @ToString.Exclude si @ToString pe RoleModel
     @ManyToMany(mappedBy = "roles")
     @ToString.Exclude
     private Set<UserModel> users = new HashSet<>();
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }

@@ -3,6 +3,7 @@ package knowbloom.backend.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -12,22 +13,24 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@Table(name="levels")
-public class LevelModel {
+@ToString
+@Table(name="counties")
+public class CountyModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name="name", unique = true, nullable = false)
+    @Column(name="name")
     private String name;
 
     @OneToMany(
-            mappedBy = "level",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
+        mappedBy = "county",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.LAZY
     )
-    private Set<ListingModel> listings = new HashSet<>();
+    @ToString.Exclude
+    private Set<CityModel> cities = new HashSet<>();
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

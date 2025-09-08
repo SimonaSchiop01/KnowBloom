@@ -1,6 +1,8 @@
 package knowbloom.backend.models;
 
 import jakarta.persistence.*;
+import knowbloom.backend.enums.Role;
+import knowbloom.backend.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,6 +30,23 @@ public class LessonModel {
     @ToString.Exclude
     private MemberModel member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="listing_id", nullable=false)
+    @ToString.Exclude
+    private ListingModel listing;
+
     @Column(name="date")
     private LocalDateTime date;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private Integer duration;
+
+    @Column(nullable = false, unique = true)
+    private Status status;
 }
