@@ -1,9 +1,7 @@
 package knowbloom.backend.services.data;
 
-import knowbloom.backend.constants.CommentConstants;
 import knowbloom.backend.constants.ReplyConstants;
 import knowbloom.backend.exceptions.NotFoundException;
-import knowbloom.backend.models.CommentModel;
 import knowbloom.backend.models.ReplyModel;
 import knowbloom.backend.repositories.ReplyRepository;
 import lombok.RequiredArgsConstructor;

@@ -24,10 +24,9 @@ public class UserDataService {
     public UserModel findByEmail(String email){
         log.info("Fetching user by email: {}", email);
         return this.userRepository
-            .findByEmail(email)
-            .orElseThrow(() -> new NotFoundException(UserConstants.NOT_FOUND_BY_EMAIL));
+                .findByEmail(email)
+                .orElseThrow(() -> new NotFoundException(UserConstants.NOT_FOUND_BY_EMAIL));
     }
-
     @Transactional(readOnly = true)
     public boolean existsByEmail(String email){
         return this.userRepository.existsByEmail(email);

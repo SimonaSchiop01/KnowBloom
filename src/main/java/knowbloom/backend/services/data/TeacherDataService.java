@@ -1,8 +1,10 @@
 package knowbloom.backend.services.data;
 
+import knowbloom.backend.constants.CategoryConstants;
 import knowbloom.backend.constants.TeacherConstants;
 import knowbloom.backend.exceptions.ConflictException;
 import knowbloom.backend.exceptions.NotFoundException;
+import knowbloom.backend.models.CategoryModel;
 import knowbloom.backend.models.TeacherModel;
 import knowbloom.backend.repositories.TeacherRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,26 +14,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TeacherDataService {
-    private final UserDataService userDataService;
     private final TeacherRepository teacherRepository;
 
     @Transactional
     public TeacherModel create(TeacherModel teacherModel) {
-        String email = teacherModel.getEmail();
+        String phoneNumber = teacherModel.getPhoneNumber();
 
-        log.info("Attempting to create teacher with email: {}", email);
+        log.info("Attempting to save teacher with phone number: {}", phoneNumber);
 
-        if (this.userDataService.existsByEmail(email)) {
-            throw new ConflictException(TeacherConstants.ALREADY_EXISTS_BY_EMAIL);
+        if(this.teacherRepository.existsTeacherModelByPhoneNumber(phoneNumber)){
+            throw new ConflictException(TeacherConstants.ALREADY_EXISTS_BY_PHONE_NUMBER);
         }
 
         TeacherModel savedTeacherModel = this.teacherRepository.save(teacherModel);
 
-        log.info("Successfully created teacher with email: {}", email);
+        log.info("Successfully saved teacher with phone number: {}", phoneNumber);
 
         return savedTeacherModel;
     }
@@ -40,8 +42,8 @@ public class TeacherDataService {
     public TeacherModel getById(UUID id) {
         log.info("Getting teacher with id: {}", id);
         return this.teacherRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException(TeacherConstants.NOT_FOUND_BY_ID));
+            .findById(id)
+            .orElseThrow(() -> new NotFoundException(TeacherConstants.NOT_FOUND_BY_ID));
     }
 
     @Transactional(readOnly = true)

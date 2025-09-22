@@ -3,8 +3,7 @@ package knowbloom.backend.services.data;
 import knowbloom.backend.constants.CommentConstants;
 import knowbloom.backend.constants.CommentReactConstants;
 import knowbloom.backend.exceptions.NotFoundException;
-import knowbloom.backend.models.CommentModel;
-import knowbloom.backend.models.CommentReactModel;
+import knowbloom.backend.models.ReviewReactModel;
 import knowbloom.backend.repositories.CommentReactRepository;
 import knowbloom.backend.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,18 +22,18 @@ public class CommentReactDataService {
     private final CommentReactRepository commentReactRepository;
 
     @Transactional
-    public CommentReactModel save(CommentReactModel commentReactModel){
+    public ReviewReactModel save(ReviewReactModel reviewReactModel){
         log.info("Attempting to save a comment react");
 
-        CommentReactModel savedCommentReactModel = this.commentReactRepository.save(commentReactModel);
+        ReviewReactModel savedReviewReactModel = this.commentReactRepository.save(reviewReactModel);
 
         log.info("Successfully saved comment react");
 
-        return savedCommentReactModel;
+        return savedReviewReactModel;
     }
 
     @Transactional(readOnly = true)
-    public List<CommentReactModel> findAllByCommentId(UUID commentId){
+    public List<ReviewReactModel> findAllByCommentId(UUID commentId){
         log.info("Fetching all the comment reacts");
         return commentReactRepository.findAllByCommentId(commentId);
     }
@@ -52,7 +51,7 @@ public class CommentReactDataService {
     }
 
     @Transactional(readOnly = true)
-    public CommentReactModel findById(UUID id){
+    public ReviewReactModel findById(UUID id){
         log.info("Fetching comment react by id: {}", id);
         return this.commentReactRepository
             .findById(id)

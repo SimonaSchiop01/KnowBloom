@@ -1,10 +1,8 @@
 package knowbloom.backend.services.data;
 
-import knowbloom.backend.constants.CategoryConstants;
 import knowbloom.backend.constants.CommentConstants;
 import knowbloom.backend.exceptions.NotFoundException;
-import knowbloom.backend.models.CategoryModel;
-import knowbloom.backend.models.CommentModel;
+import knowbloom.backend.models.ReviewModel;
 import knowbloom.backend.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,26 +19,26 @@ public class CommentDataService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public CommentModel save(CommentModel commentModel){
-        String title = commentModel.getTitle();
+    public ReviewModel save(ReviewModel reviewModel){
+        String title = reviewModel.getTitle();
 
         log.info("Attempting to save comment with title: {}", title);
 
-        CommentModel savedCommentModel = this.commentRepository.save(commentModel);
+        ReviewModel savedReviewModel = this.commentRepository.save(reviewModel);
 
         log.info("Successfully saved comment with title: {}", title);
 
-        return savedCommentModel;
+        return savedReviewModel;
     }
 
     @Transactional(readOnly = true)
-    public List<CommentModel> findAll(){
+    public List<ReviewModel> findAll(){
         log.info("Fetching all the comments");
         return this.commentRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public CommentModel findById(UUID id){
+    public ReviewModel findById(UUID id){
         log.info("Fetching comment by id: {}", id);
         return this.commentRepository
             .findById(id)
